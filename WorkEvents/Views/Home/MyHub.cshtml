@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+    <title>Azure SignalR Group Chat</title>
+</head>
+<body>
+    
+    <ol class="list-group list-group-numbered" id="listItens">
+      
+    </ol>
+
+</body>
+</html>
+
+
+@section Scripts{
+
+    <!--Add script to update the page and send messages.-->
+    <script type="text/javascript">
+
+        signalr.createConnection('/hub');
+        signalr.startConnection();
+
+        var messageCallback = function (name, message) {
+            toast.info('Mensagem recebida. User: ' + name + '  Mensagem: ' + message);
+
+            var template = itemTemplate.replace("{{user}}", name).replace("{{message}}", message);
+            $('#listItens').append(template);
+
+        };
+
+        signalr.bindConnectionMessage('broadcastMessage', messageCallback);
+
+        //$('#btnSend').click(function(){
+        //    var user = $('#txtUser').val();
+        //    var message = $('#txtMensagem').val();
+
+        //    signalr.connection.send('broadcastMessage', user, message);
+        //});
+
+
+
+      const itemTemplate = `       
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">{{user}}</div>
+                  {{message}}
+                </div>
+                <span class="badge bg-primary rounded-pill"></span>
+              </li>
+        `;
+
+
+    </script>
+}

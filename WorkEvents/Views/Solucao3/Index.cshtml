@@ -1,0 +1,102 @@
+﻿<div class="container">
+    <h1>Solução 3</h1>
+    <h6>Requisição POST para o backend que executa um processo pesado e retorna a resposta direta ao navegador.</h6>
+    <h6>O processamento pesado será de responsibilidade de um microsserviço específico.</h6>
+    <h6>Utilizando SignalR, recebemos uma notificação do Backend sobre o resultado da operação.</h6>
+    <h6>Caso a resposta seja positiva, fazemos uma requisição para trazer o dado processado.</h6>
+    
+    <hr /><br /><br />
+
+    <div class="row">
+        <div class="col-md-4">
+            <input class="form-control" type="text" id="txtTitle" value="Gustavo" />
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" type="text" id="txtDescription" value="Texto Default" />
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-secondary" id="btnSend" >Enviar</button>
+        </div>
+
+        <br /><br />
+
+        <div class="col-md-12">
+            <ol class="list-group list-group-numbered" id="listItens">
+            </ol>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        // Criação da conexão passando o endereço do hub
+        signalr.createConnection('/hub');
+
+        // Iniciar conexão
+        signalr.startConnection();
+
+        // Handler para processar mensagem recebida
+        var messageCallback = function (message) {
+            console.log('Mensagem recebida. Message ID: ' + message.Id);
+            toast.info('Mensagem recebida. Message ID: ' + message.Id);
+            applyMessage(message);
+        };
+
+        // Adicionar handler no escopo da conexão
+        signalr.bindConnectionMessage('BroadcastMessage', messageCallback);
+
+        // Click do botão enviar
+        $('#btnSend').click(function(){
+            
+            $("#overlay").fadeIn(300);　
+
+            var data = {
+                title: $('#txtTitle').val(),
+                description: $('#txtDescription').val()
+            };
+
+            $.ajax({
+                url: '/solucao3/DoEvent',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log('Mensagem enviada ao servidor com sucesso.');
+                },
+                error: function () {
+                    alert("error");
+                }
+            }).done(function(){
+                $("#overlay").fadeOut(300);
+            });
+        });
+
+        // Método que realizará o processamento da mensagem no frontend
+        function applyMessage(message){
+            console.log('Novo evento recebido');
+
+            var template = itemTemplate
+                .replace("{{title}}", message.title)
+                .replace("{{description}}", message.description)
+                .replace("{{date}}", new Date(message.date).toLocaleString("pt-BR"));
+            
+            $('#listItens').append(template);
+            
+            console.log('Mensagem recebida com sucesso.');
+        }
+
+        const itemTemplate = `       
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">{{title}} | {{date}}</div>
+                {{description}}
+            </div>
+            <span class="badge bg-primary rounded-pill"></span>
+            </li>
+        `;
+
+    </script>
+}

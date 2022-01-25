@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WorkEvents</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WorkEvents.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/toast/dist/css/jquery.toast.min.css" asp-append-version="true" />
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <br />
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Situacao" asp-action="Index">Situação</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Solucao1" asp-action="Index">Solução 1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Solucao2" asp-action="Index">Solução 2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Solucao3" asp-action="Index">Solução 3</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <div id="overlay">
+      <div class="cv-spinner">
+        <span class="spinner"></span>
+      </div>
+    </div>
+
+    <footer class="border-top footer text-muted" style="margin-top: 50px;">
+        <div class="container">
+            <img src="https://cdn.mundotech.com.br/images/Noticias/Conteudo/Ambev%20Tech_cinza.png" style="width: 100px;" />  
+            &copy; 2022 - Tech Talk
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script src="~/lib/toast/dist/js/jquery.toast.min.js" asp-append-version="true"></script>
+    <script src="~/js/toastService.js" asp-append-version="true"></script>
+
+    <!--Reference the SignalR library. -->
+    <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@3.1.8/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalR-service.js" asp-append-version="true"></script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

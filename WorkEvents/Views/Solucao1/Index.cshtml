@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WorkEvents.Models.Message>
+
+<div class="container">
+    <h1>Solução 1</h1>
+    <h6>Requisição POST para o backend que apenas inicia a execução de um processo pesado e não retorna a resultado do processamento.</h6>
+    
+    <hr /><br /><br />
+
+    <div class="row">
+        <div class="col-md-4">
+            <input class="form-control" type="text" id="txtTitle" value="Gustavo" />
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" type="text" id="txtDescription" value="Texto Default" />
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-secondary" id="btnSend" >Enviar</button>
+        </div>
+
+        <br /><br />
+
+        <div class="col-md-12">
+            <ol class="list-group list-group-numbered" id="listItens">
+                @foreach (var item in Model)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">@item.Title | @item.Date</div>
+                            @item.Description
+                        </div>
+                        <span class="badge bg-primary rounded-pill"></span>
+                    </li>
+                }
+            </ol>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <!--Add script to update the page and send messages.-->
+    <script type="text/javascript">
+
+        $('#btnSend').click(function(){
+            
+            $("#overlay").fadeIn(300);　
+
+            var data = {
+                title: $('#txtTitle').val(),
+                description: $('#txtDescription').val()
+            };
+
+            $.ajax({
+                url: '/solucao1/DoEvent',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log('OK');
+                },
+                error: function () {
+                    alert("error");
+                }
+            }).done(function(){
+                $("#overlay").fadeOut(300);
+            });
+        });
+
+    </script>
+}
