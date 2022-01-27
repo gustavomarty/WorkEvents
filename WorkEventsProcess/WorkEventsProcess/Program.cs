@@ -7,8 +7,8 @@ IHostBuilder host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<ParametrosExecucaoServiceBus>(
             new ParametrosExecucaoServiceBus(){
                 ConnectionString = "<<service-bus-connection>>",
-                Topic = "team-topic",
-                Subscription = "team-sub1"
+                Topic = "techtalk",
+                Subscription = "subs1"
             });
         services.AddHostedService<Worker>();
         

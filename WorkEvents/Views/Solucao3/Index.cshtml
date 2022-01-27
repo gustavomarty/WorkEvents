@@ -40,8 +40,8 @@
 
         // Handler para processar mensagem recebida
         var messageCallback = function (message) {
-            console.log('Mensagem recebida. Message ID: ' + message.Id);
-            toast.info('Mensagem recebida. Message ID: ' + message.Id);
+            console.log('Mensagem recebida. Message ID: ' + message.id);
+            toast.info('Mensagem recebida. Message ID: ' + message.id);
             applyMessage(message);
         };
 
@@ -76,7 +76,6 @@
 
         // Método que realizará o processamento da mensagem no frontend
         function applyMessage(message){
-            console.log('Novo evento recebido');
 
             var template = itemTemplate
                 .replace("{{title}}", message.title)
@@ -85,7 +84,7 @@
             
             $('#listItens').append(template);
             
-            console.log('Mensagem recebida com sucesso.');
+            console.log('Mensagem processada com sucesso.');
         }
 
         const itemTemplate = `       

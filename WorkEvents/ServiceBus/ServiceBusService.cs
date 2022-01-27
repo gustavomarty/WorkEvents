@@ -10,7 +10,7 @@ namespace WorkEvents.ServiceBus
         static string connectionString = "<<service-bus-connection>>";
 
         // name of your Service Bus queue
-        static string topicName = "team-topic";
+        static string topicName = "techtalk";
 
         // the client that owns the connection and can be used to create senders and receivers
         static ServiceBusClient client;
@@ -41,7 +41,7 @@ namespace WorkEvents.ServiceBus
             {
                 // Use the producer client to send the batch of messages to the Service Bus queue
                 await sender.SendMessagesAsync(messageBatch);
-                Console.WriteLine($"A messages has been published to the queue.");
+                Console.WriteLine($"Mensagem publicada na fila...");
             }
             finally
             {
